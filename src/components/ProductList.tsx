@@ -1,6 +1,15 @@
 import { useQuery } from '@apollo/client';
+import styled from 'styled-components';
 import { GetAllProductsQuery } from '../generated/graphql';
 import { GET_ALL_PRODUCTS } from '../graphql/queries';
+import ProductCard from './ProductCard';
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  padding: 20px;
+`;
 
 export function ProductList() {
   const { loading, error, data } =
@@ -10,15 +19,10 @@ export function ProductList() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="products-grid">
+    <Grid>
       {data?.products.items.map((product) => (
-        <div key={product.id} className="product-card">
-          <img src={product?.featuredAsset?.preview} alt={product.name} />
-          <h3>{product.name}</h3>
-          <p>{product.description}</p>
-          <p>${product.variants[0].price / 100}</p>
-        </div>
+        <ProductCard product={product} />
       ))}
-    </div>
+    </Grid>
   );
 }
