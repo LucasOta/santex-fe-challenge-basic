@@ -1,6 +1,7 @@
 export interface Theme {
   colors: {
-    background: string;
+    bg: string;
+    fg: string;
     text: string;
     primary: string;
     secondary: string;
@@ -13,9 +14,10 @@ export interface Theme {
   };
 }
 
-const darkTheme = {
+const darkTheme: Theme = {
   colors: {
-    background: '#121212',
+    bg: '#121212',
+    fg: '#f8f9fa',
     text: '#FFFFFF',
     primary: '#0d6efd',
     secondary: '#6c757d',
