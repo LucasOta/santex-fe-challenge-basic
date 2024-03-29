@@ -3332,7 +3332,7 @@ export type Zone = Node & {
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, variants: Array<{ __typename?: 'ProductVariant', price: any }> }> } };
+export type GetAllProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, description: string, featuredAsset?: { __typename?: 'Asset', preview: string } | null, variants: Array<{ __typename?: 'ProductVariant', price: any }> }> } };
 
 
 export const GetAllProductsDocument = gql`
@@ -3341,6 +3341,10 @@ export const GetAllProductsDocument = gql`
     items {
       id
       name
+      description
+      featuredAsset {
+        preview
+      }
       variants {
         price
       }
