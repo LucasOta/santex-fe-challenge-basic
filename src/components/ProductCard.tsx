@@ -22,13 +22,11 @@ const StyledImage = styled.img`
 `;
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => (
-  <StyledProductCard>
-    <div key={product.id}>
-      <StyledImage src={product?.featuredAsset?.preview} alt={product.name} />
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-      <p>${product.variants[0].price / 100}</p>
-    </div>
+  <StyledProductCard key={product.id}>
+    <StyledImage src={product?.featuredAsset?.preview} alt={product.name} />
+    <h3>{product.name}</h3>
+    <p>{product.description}</p>
+    <p>${product.variants[0].price}</p>
   </StyledProductCard>
 );
 
