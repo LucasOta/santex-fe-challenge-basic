@@ -1,6 +1,12 @@
+import { useMutation } from '@apollo/client';
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Exact, GetAllProductsQuery } from '../generated/graphql';
+import {
+  AddItemToOrderMutation,
+  Exact,
+  GetAllProductsQuery,
+} from '../generated/graphql';
+import { ADD_ITEM_TO_ORDER } from '../graphql/mutations';
 
 type ProductItem = Exact<GetAllProductsQuery>['products']['items'][number];
 
@@ -21,13 +27,26 @@ const StyledImage = styled.img`
   border-radius: 5px;
 `;
 
-const ProductCard: FC<ProductCardProps> = ({ product }) => (
-  <StyledProductCard key={product.id}>
-    <StyledImage src={product?.featuredAsset?.preview} alt={product.name} />
-    <h3>{product.name}</h3>
-    <p>{product.description}</p>
-    <p>${product.variants[0].price}</p>
-  </StyledProductCard>
-);
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const [addItemToOrder, { data, loading, error }] =
+    useMutation<AddItemToOrderMutation>(ADD_ITEM_TO_ORDER);
+
+  const handlePurchase = () => {
+    addItemToOrder({ variables: { id: product.id, quantity: 1 } });
+  };
+
+  return (
+    <StyledProductCard>
+      <StyledImage src={product?.featuredAsset?.preview} alt={product.name} />
+      <h3>{product.name}</h3>
+      <p>{product.description}</p>
+      <p>${product.variants[0].price}</p>
+      <button onClick={handlePurchase}>
+        {!loading ? 'Buy' : 'Adding to cart...'}
+      </button>
+      {error && <p>Error: {error}</p>}
+    </StyledProductCard>
+  );
+};
 
 export default ProductCard;
