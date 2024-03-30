@@ -21,7 +21,7 @@ export function ProductList() {
   return (
     <Grid>
       {data?.products.items.map((product) => (
-        <ProductCard product={product} />
+        <ProductCard product={product} key={product.id} />
       ))}
     </Grid>
   );

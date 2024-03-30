@@ -3329,12 +3329,74 @@ export type Zone = Node & {
   updatedAt: Scalars['DateTime']['output'];
 };
 
+export type AddItemToOrderMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  quantity: Scalars['Int']['input'];
+}>;
+
+
+export type AddItemToOrderMutation = { __typename?: 'Mutation', addItemToOrder: { __typename: 'InsufficientStockError', errorCode: ErrorCode, message: string } | { __typename: 'NegativeQuantityError', errorCode: ErrorCode, message: string } | { __typename: 'Order', id: string, total: any } | { __typename: 'OrderLimitError', errorCode: ErrorCode, message: string } | { __typename: 'OrderModificationError', errorCode: ErrorCode, message: string } };
+
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllProductsQuery = { __typename?: 'Query', products: { __typename?: 'ProductList', items: Array<{ __typename?: 'Product', id: string, name: string, description: string, featuredAsset?: { __typename?: 'Asset', preview: string } | null, variants: Array<{ __typename?: 'ProductVariant', price: any }> }> } };
 
 
+export const AddItemToOrderDocument = gql`
+    mutation AddItemToOrder($id: ID!, $quantity: Int!) {
+  addItemToOrder(productVariantId: $id, quantity: $quantity) {
+    ... on Order {
+      id
+      total
+    }
+    ... on OrderModificationError {
+      errorCode
+      message
+    }
+    ... on OrderLimitError {
+      errorCode
+      message
+    }
+    ... on NegativeQuantityError {
+      errorCode
+      message
+    }
+    ... on InsufficientStockError {
+      errorCode
+      message
+    }
+    __typename
+  }
+}
+    `;
+export type AddItemToOrderMutationFn = Apollo.MutationFunction<AddItemToOrderMutation, AddItemToOrderMutationVariables>;
+
+/**
+ * __useAddItemToOrderMutation__
+ *
+ * To run a mutation, you first call `useAddItemToOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddItemToOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addItemToOrderMutation, { data, loading, error }] = useAddItemToOrderMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      quantity: // value for 'quantity'
+ *   },
+ * });
+ */
+export function useAddItemToOrderMutation(baseOptions?: Apollo.MutationHookOptions<AddItemToOrderMutation, AddItemToOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddItemToOrderMutation, AddItemToOrderMutationVariables>(AddItemToOrderDocument, options);
+      }
+export type AddItemToOrderMutationHookResult = ReturnType<typeof useAddItemToOrderMutation>;
+export type AddItemToOrderMutationResult = Apollo.MutationResult<AddItemToOrderMutation>;
+export type AddItemToOrderMutationOptions = Apollo.BaseMutationOptions<AddItemToOrderMutation, AddItemToOrderMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   products(options: {take: 10}) {
