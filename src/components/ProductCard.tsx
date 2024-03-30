@@ -41,7 +41,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <h3>{product.name}</h3>
       <p>{product.description}</p>
       <p>${product.variants[0].price}</p>
-      <button onClick={handlePurchase}>
+      <button onClick={handlePurchase} disabled={loading}>
         {!loading ? 'Buy' : 'Adding to cart...'}
       </button>
       {error && <p>Error: {error}</p>}
