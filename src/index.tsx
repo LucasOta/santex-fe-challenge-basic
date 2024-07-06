@@ -17,6 +17,7 @@ const commerceLink = createHttpLink({
       ? `Bearer ${localStorage.getItem('Auth-Token')}`
       : '',
   },
+  credentials: 'include',
 });
 
 const afterwareLink = new ApolloLink((operation, forward) => {
