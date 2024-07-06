@@ -8,6 +8,7 @@ import { ApolloProvider } from '@apollo/client/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { OrderProvider } from './contexts/OrderContext';
 import reportWebVitals from './reportWebVitals';
 
 const commerceLink = createHttpLink({
@@ -40,7 +41,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <OrderProvider>
+        <App />
+      </OrderProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
