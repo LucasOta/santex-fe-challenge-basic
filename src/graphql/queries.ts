@@ -17,3 +17,12 @@ export const GET_ALL_PRODUCTS = gql`
     }
   }
 `;
+
+export const GET_ACTIVE_ORDER = gql`
+  query GetActiveOrder {
+    activeOrder {
+      id
+      total
+    }
+  }
+`;

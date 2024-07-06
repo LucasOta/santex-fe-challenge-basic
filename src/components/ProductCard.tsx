@@ -28,7 +28,7 @@ const StyledImage = styled.img`
 `;
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const [addItemToOrder, { data, loading, error }] =
+  const [addItemToOrder, { loading, error }] =
     useMutation<AddItemToOrderMutation>(ADD_ITEM_TO_ORDER);
 
   const handlePurchase = () => {
