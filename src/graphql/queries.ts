@@ -6,7 +6,6 @@ export const GET_ALL_PRODUCTS = gql`
       items {
         id
         name
-        description
         featuredAsset {
           preview
         }

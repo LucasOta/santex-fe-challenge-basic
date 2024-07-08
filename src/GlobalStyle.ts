@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle<ThemeProps<Theme>>`
     padding: 0;
     background-color: ${(props) => props.theme.colors.bg};
     color: ${(props) => props.theme.colors.text};
-    font-family: 'Roboto', sans-serif;
+    font-family: "elza-text", sans-serif;
   }
 `;
 

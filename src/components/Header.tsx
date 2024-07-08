@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import { useOrder } from '../contexts/OrderContext';
 
 const StyledHeader = styled.div`
-  background-color: ${(props) => props.theme.colors.danger};
+  padding: 16px;
+`;
+const LogoImage = styled.img`
+  width: 100px;
+  height: auto;
 `;
 
 export function Header() {
@@ -11,10 +15,7 @@ export function Header() {
   return (
     <StyledHeader>
       <header>
-        <img
-          src="https://santex.wpengine.com/wp-content/uploads/2019/02/logo-santex@3x.png"
-          alt="logo"
-        />
+        <LogoImage src={`/santex-logo-dark.svg`} alt="logo" />
         {order ? (
           <p>Order total: ${order.total}</p>
         ) : (
