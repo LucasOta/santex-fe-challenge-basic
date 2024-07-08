@@ -19,7 +19,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
       The mutation is called `addItemToOrder`. Hint: look into the API documentation section of this document
 - [x] Implement app header component that includes the subtotal of the current order and persists through page refresh. Hint: use Graphql mutation and Context API
 - [x] Add custom hook named `useStateWithStorage` with same API as `useState` hook but adding local storage capabilities. Can be used for header subtotal
-- [ ] Create tests for grid UI item and other components
+- [x] Create tests for grid UI item and other components
 
 ## API documentation
 
