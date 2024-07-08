@@ -7,8 +7,8 @@ import ProductCard from './ProductCard';
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  gap: 16px;
+  padding: 16px;
 `;
 
 export function ProductList() {
