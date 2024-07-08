@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { FC } from 'react';
 import styled from 'styled-components';
 
@@ -6,8 +6,10 @@ import {
   AddItemToOrderMutation,
   Exact,
   GetAllProductsQuery,
+  Order,
 } from '../../generated/graphql';
 import { ADD_ITEM_TO_ORDER } from '../../graphql/mutations';
+import { GET_ACTIVE_ORDER } from '../../graphql/queries';
 import ProductCardFooter from './ProductCardFooter';
 import ProductImage from './ProductImage';
 
@@ -35,11 +37,35 @@ const StyledProductCard = styled.div`
 `;
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const { refetch } = useQuery(GET_ACTIVE_ORDER);
   const [addItemToOrder, { loading, error }] =
-    useMutation<AddItemToOrderMutation>(ADD_ITEM_TO_ORDER);
+    useMutation<AddItemToOrderMutation>(ADD_ITEM_TO_ORDER, {
+      update(cache, { data }) {
+        if (!data) return;
 
-  const handlePurchase = () => {
-    addItemToOrder({ variables: { id: product.id, quantity: 1 } });
+        const { addItemToOrder } = data;
+
+        const existingData = cache.readQuery<{ activeOrder: Order } | null>({
+          query: GET_ACTIVE_ORDER,
+        });
+
+        if (!existingData) return;
+
+        cache.writeQuery({
+          query: GET_ACTIVE_ORDER,
+          data: {
+            activeOrder: {
+              ...existingData.activeOrder,
+              ...addItemToOrder,
+            },
+          },
+        });
+      },
+    });
+
+  const handlePurchase = async () => {
+    await addItemToOrder({ variables: { id: product.id, quantity: 1 } });
+    refetch();
   };
 
   return (
