@@ -1,9 +1,9 @@
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { GET_ALL_PRODUCTS } from '../graphql/queries';
-import { darkTheme } from '../theme';
-import { ProductList } from './ProductList';
+import ProductList from '.';
+import { GET_ALL_PRODUCTS } from '../../graphql/queries';
+import { darkTheme } from '../../theme';
 
 const mockProducts = {
   request: {

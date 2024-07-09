@@ -1,33 +1,34 @@
+import { FC } from 'react';
 import styled from 'styled-components';
-import BuyButton from './BuyButton';
-import ProductInfo from './ProductInfo';
+import BuyButton from './buy-button';
+import ProductInfo from './product-info';
 
-const StyledProductDescription = styled.div`
+const StyledProductCardFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
 `;
 
-interface ProductDescriptionProps {
+interface ProductCardFooterProps {
   name: string;
   price: number;
   onClick: () => void;
   loading: boolean;
 }
 
-const ProductDescription: React.FC<ProductDescriptionProps> = ({
+const ProductCardFooter: FC<ProductCardFooterProps> = ({
   name,
   price,
   onClick,
   loading,
 }) => (
-  <StyledProductDescription>
+  <StyledProductCardFooter>
     <ProductInfo name={name} price={price} />
     <BuyButton onClick={onClick} loading={loading}>
       {!loading ? 'Buy' : 'Adding to cart...'}
     </BuyButton>
-  </StyledProductDescription>
+  </StyledProductCardFooter>
 );
 
-export default ProductDescription;
+export default ProductCardFooter;

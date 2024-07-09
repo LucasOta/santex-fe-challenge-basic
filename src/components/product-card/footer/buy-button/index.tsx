@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -35,11 +36,7 @@ interface BuyButtonProps {
   loading: boolean;
 }
 
-const BuyButton: React.FC<BuyButtonProps> = ({
-  onClick,
-  loading,
-  children,
-}) => (
+const BuyButton: FC<BuyButtonProps> = ({ onClick, loading, children }) => (
   <StyledButton onClick={onClick} disabled={loading}>
     {children}
   </StyledButton>

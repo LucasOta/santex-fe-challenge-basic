@@ -8,7 +8,7 @@ import { ApolloProvider } from '@apollo/client/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { OrderProvider } from './contexts/OrderContext';
+import { OrderProvider } from './contexts/order-context';
 import reportWebVitals from './reportWebVitals';
 
 const commerceLink = createHttpLink({
