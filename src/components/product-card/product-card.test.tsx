@@ -6,6 +6,7 @@ import ProductCard from '.';
 import { ADD_ITEM_TO_ORDER } from '../../graphql/mutations';
 import { GET_ACTIVE_ORDER } from '../../graphql/queries';
 import { darkTheme } from '../../theme';
+import formatAsCurrency from '../../utils/formatAsCurrency';
 
 const mocks = [
   {
@@ -35,13 +36,14 @@ const mocks = [
 ];
 
 describe('ProductCard component', () => {
+  const price = 100;
   const product = {
     id: '1',
     description:
       'Officia aute esse nulla excepteur sit laborum Lorem excepteur est aliqua ipsum laboris.',
     featuredAsset: { preview: 'test-image.jpg' },
     name: 'Test Product',
-    variants: [{ price: 100 }],
+    variants: [{ price }],
   };
 
   it('should render product details and handle purchase', async () => {
@@ -54,7 +56,7 @@ describe('ProductCard component', () => {
     );
 
     expect(screen.getByText('Test Product')).toBeInTheDocument();
-    expect(screen.getByText('$1.00 USD')).toBeInTheDocument();
+    expect(screen.getByText(formatAsCurrency(price / 100))).toBeInTheDocument();
 
     fireEvent.click(screen.getByText('Buy'));
 
