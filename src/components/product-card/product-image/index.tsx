@@ -13,7 +13,7 @@ interface ProductImageProps {
 }
 
 const ProductImage: FC<ProductImageProps> = ({ src }) => (
-  <BackgroundImage className="background-image" src={src} />
+  <BackgroundImage data-testid="background-image" src={src} />
 );
 
 export default ProductImage;
