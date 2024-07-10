@@ -3,16 +3,18 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import ProductCardFooter from '.';
 import { darkTheme } from '../../../theme';
+import formatAsCurrency from '../../../utils/formatAsCurrency';
 
 describe('ProductCardFooter component', () => {
   const mockOnClick = jest.fn();
+  const price = 100;
 
   it('should display product info and a buy button', () => {
     render(
       <ThemeProvider theme={darkTheme}>
         <ProductCardFooter
           name="Test Product"
-          price={100}
+          price={price}
           onClick={mockOnClick}
           loading={false}
         />
@@ -20,7 +22,7 @@ describe('ProductCardFooter component', () => {
     );
 
     expect(screen.getByText('Test Product')).toBeInTheDocument();
-    expect(screen.getByText('$1.00 USD')).toBeInTheDocument();
+    expect(screen.getByText(formatAsCurrency(price / 100))).toBeInTheDocument();
     expect(screen.getByText('Buy')).toBeInTheDocument();
   });
 

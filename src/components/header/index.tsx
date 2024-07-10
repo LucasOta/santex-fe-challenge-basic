@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useOrder } from '../../contexts/order-context';
 import useStateWithStorage from '../../hooks/useStateWithStorage';
+import formatAsCurrency from '../../utils/formatAsCurrency';
 
 const StyledHeader = styled.div`
   padding: 16px;
@@ -26,7 +27,7 @@ const Header = () => {
       <header>
         <LogoImage src={`/santex-logo-dark.svg`} alt="logo" />
         {order ? (
-          <p>Order total: ${subtotal}</p>
+          <p>Order total: {formatAsCurrency(subtotal / 100)}</p>
         ) : (
           <p>There's no product selected.</p>
         )}

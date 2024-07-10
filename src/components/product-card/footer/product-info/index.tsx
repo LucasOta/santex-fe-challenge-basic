@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import formatAsCurrency from '../../../../utils/formatAsCurrency';
 
 const StyledProductInfo = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ interface ProductInfoProps {
 const ProductInfo: FC<ProductInfoProps> = ({ name, price }) => (
   <StyledProductInfo>
     <StyledName>{name}</StyledName>
-    <StyledPrice>${(price / 100).toFixed(2)} USD</StyledPrice>
+    <StyledPrice>{formatAsCurrency(price / 100)}</StyledPrice>
   </StyledProductInfo>
 );
 

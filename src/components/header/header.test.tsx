@@ -5,11 +5,13 @@ import Header from '.';
 import { OrderProvider } from '../../contexts/order-context';
 import { GET_ACTIVE_ORDER } from '../../graphql/queries';
 import useStateWithStorage from '../../hooks/useStateWithStorage';
+import formatAsCurrency from '../../utils/formatAsCurrency';
 
 jest.mock('../../hooks/useStateWithStorage', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+const total = 100;
 
 const mocks = [
   {
@@ -20,7 +22,7 @@ const mocks = [
       data: {
         activeOrder: {
           id: '1',
-          total: 100,
+          total,
         },
       },
     },
@@ -67,7 +69,7 @@ describe('Header component', () => {
   });
 
   it('should display the order total when there is an order', async () => {
-    (useStateWithStorage as jest.Mock).mockReturnValue([100, jest.fn()]);
+    (useStateWithStorage as jest.Mock).mockReturnValue([total, jest.fn()]);
 
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -78,7 +80,9 @@ describe('Header component', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Order total: $100')).toBeInTheDocument();
+      expect(
+        screen.getByText(`Order total: ${formatAsCurrency(total / 100)}`)
+      ).toBeInTheDocument();
     });
   });
 
@@ -95,7 +99,7 @@ describe('Header component', () => {
     );
 
     await waitFor(() => {
-      expect(setSubtotalMock).toHaveBeenCalledWith(100);
+      expect(setSubtotalMock).toHaveBeenCalledWith(total);
     });
   });
 });
