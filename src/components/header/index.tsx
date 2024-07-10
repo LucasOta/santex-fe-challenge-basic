@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useOrder } from '../contexts/OrderContext';
-import useStateWithStorage from '../hooks/useStateWithStorage';
+import { useOrder } from '../../contexts/order-context';
+import useStateWithStorage from '../../hooks/useStateWithStorage';
 
 const StyledHeader = styled.div`
   padding: 16px;
@@ -11,7 +11,7 @@ const LogoImage = styled.img`
   height: auto;
 `;
 
-export function Header() {
+const Header = () => {
   const { order } = useOrder();
   const [subtotal, setSubtotal] = useStateWithStorage('subtotal', 0);
 
@@ -33,4 +33,6 @@ export function Header() {
       </header>
     </StyledHeader>
   );
-}
+};
+
+export default Header;

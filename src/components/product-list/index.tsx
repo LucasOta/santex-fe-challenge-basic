@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
-import { GetAllProductsQuery } from '../generated/graphql';
-import { GET_ALL_PRODUCTS } from '../graphql/queries';
-import ProductCard from './ProductCard';
+import { GetAllProductsQuery } from '../../generated/graphql';
+import { GET_ALL_PRODUCTS } from '../../graphql/queries';
+import ProductCard from '../product-card';
 
 export const Grid = styled.div`
   display: grid;
@@ -11,7 +11,7 @@ export const Grid = styled.div`
   padding: 16px;
 `;
 
-export function ProductList() {
+const ProductList = () => {
   const { loading, error, data } =
     useQuery<GetAllProductsQuery>(GET_ALL_PRODUCTS);
 
@@ -25,4 +25,6 @@ export function ProductList() {
       ))}
     </Grid>
   );
-}
+};
+
+export default ProductList;

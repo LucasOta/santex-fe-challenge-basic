@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import styled from 'styled-components';
 
 const StyledProductInfo = styled.div`
@@ -31,7 +32,7 @@ interface ProductInfoProps {
   price: number;
 }
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ name, price }) => (
+const ProductInfo: FC<ProductInfoProps> = ({ name, price }) => (
   <StyledProductInfo>
     <StyledName>{name}</StyledName>
     <StyledPrice>${(price / 100).toFixed(2)} USD</StyledPrice>

@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import styled from 'styled-components';
 
 const BackgroundImage = styled.div<{ src?: string }>`
@@ -9,10 +10,9 @@ const BackgroundImage = styled.div<{ src?: string }>`
 
 interface ProductImageProps {
   src?: string;
-  alt: string;
 }
 
-const ProductImage: React.FC<ProductImageProps> = ({ src, alt }) => (
+const ProductImage: FC<ProductImageProps> = ({ src }) => (
   <BackgroundImage className="background-image" src={src} />
 );
 

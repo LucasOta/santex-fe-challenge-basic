@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { FC } from 'react';
 import styled from 'styled-components';
-
 import {
   AddItemToOrderMutation,
   Exact,
@@ -10,8 +9,8 @@ import {
 } from '../../generated/graphql';
 import { ADD_ITEM_TO_ORDER } from '../../graphql/mutations';
 import { GET_ACTIVE_ORDER } from '../../graphql/queries';
-import ProductCardFooter from './ProductCardFooter';
-import ProductImage from './ProductImage';
+import ProductCardFooter from './footer';
+import ProductImage from './product-image';
 
 type ProductItem = Exact<GetAllProductsQuery>['products']['items'][number];
 
@@ -70,7 +69,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   return (
     <StyledProductCard>
-      <ProductImage src={product?.featuredAsset?.preview} alt={product.name} />
+      <ProductImage src={product?.featuredAsset?.preview} />
       <ProductCardFooter
         name={product.name}
         price={product.variants[0].price}
