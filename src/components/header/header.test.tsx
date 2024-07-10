@@ -1,68 +1,102 @@
+// Header.test.tsx
+import { MockedProvider } from '@apollo/client/testing';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Header from '.';
-import { useOrder } from '../../contexts/order-context';
+import { OrderProvider } from '../../contexts/order-context';
+import { GET_ACTIVE_ORDER } from '../../graphql/queries';
 import useStateWithStorage from '../../hooks/useStateWithStorage';
 
-// Mock the useOrder hook
-jest.mock('../../contexts/order-context', () => ({
-  useOrder: jest.fn(),
-}));
-
-// Mock the useStateWithStorage hook
 jest.mock('../../hooks/useStateWithStorage', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
+const mocks = [
+  {
+    request: {
+      query: GET_ACTIVE_ORDER,
+    },
+    result: {
+      data: {
+        activeOrder: {
+          id: '1',
+          total: 100,
+        },
+      },
+    },
+  },
+];
+
 describe('Header component', () => {
   beforeEach(() => {
-    // Clear mocks before each test
     jest.clearAllMocks();
   });
 
-  it('should display the logo', () => {
-    (useOrder as jest.Mock).mockReturnValue({ order: null });
+  it('should display the logo', async () => {
     (useStateWithStorage as jest.Mock).mockReturnValue([0, jest.fn()]);
 
-    render(<Header />);
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <OrderProvider>
+          <Header />
+        </OrderProvider>
+      </MockedProvider>
+    );
 
     const logoImage = screen.getByAltText('logo');
     expect(logoImage).toBeInTheDocument();
     expect(logoImage).toHaveAttribute('src', '/santex-logo-dark.svg');
   });
 
-  it('should display "There\'s no product selected." when there is no order', () => {
-    (useOrder as jest.Mock).mockReturnValue({ order: null });
+  it('should display "There\'s no product selected." when there is no order', async () => {
     (useStateWithStorage as jest.Mock).mockReturnValue([0, jest.fn()]);
 
-    render(<Header />);
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <OrderProvider>
+          <Header />
+        </OrderProvider>
+      </MockedProvider>
+    );
 
-    expect(
-      screen.getByText("There's no product selected.")
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText("There's no product selected.")
+      ).toBeInTheDocument();
+    });
   });
 
-  it('should display the order total when there is an order', () => {
-    const mockOrder = { id: '1', total: 100 };
-    (useOrder as jest.Mock).mockReturnValue({ order: mockOrder });
-    (useStateWithStorage as jest.Mock).mockReturnValue([
-      mockOrder.total,
-      jest.fn(),
-    ]);
+  it('should display the order total when there is an order', async () => {
+    (useStateWithStorage as jest.Mock).mockReturnValue([100, jest.fn()]);
 
-    render(<Header />);
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <OrderProvider>
+          <Header />
+        </OrderProvider>
+      </MockedProvider>
+    );
 
-    expect(screen.getByText('Order total: $100')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Order total: $100')).toBeInTheDocument();
+    });
   });
 
-  it('should update the subtotal when the order changes', () => {
+  it('should update the subtotal when the order changes', async () => {
     const setSubtotalMock = jest.fn();
-    (useOrder as jest.Mock).mockReturnValue({ order: { id: '1', total: 100 } });
     (useStateWithStorage as jest.Mock).mockReturnValue([0, setSubtotalMock]);
 
-    render(<Header />);
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <OrderProvider>
+          <Header />
+        </OrderProvider>
+      </MockedProvider>
+    );
 
-    expect(setSubtotalMock).toHaveBeenCalledWith(100);
+    await waitFor(() => {
+      expect(setSubtotalMock).toHaveBeenCalledWith(100);
+    });
   });
 });
